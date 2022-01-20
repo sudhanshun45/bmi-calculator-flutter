@@ -1,12 +1,13 @@
-import 'package:bmi_calculator/result_page.dart';
+import 'package:bmi_calculator/screens/result_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'icon_content.dart';
-import 'reusable_card.dart';
-import 'constant.dart';
-import 'bottom_button.dart';
-import 'round_icon.dart';
+import '../components/icon_content.dart';
+import '../components/reusable_card.dart';
+import '../constant.dart';
+import '../components/bottom_button.dart';
+import 'package:bmi_calculator/components//round_icon.dart';
+import 'package:bmi_calculator/calculator_brain.dart';
 
 
 enum Gender{
@@ -149,8 +150,8 @@ class _InputPageState extends State<InputPage> {
                     )
                   ],
                 ),
-
-              ),),
+              ),
+              ),
               Expanded(child: ReusableCard(
                 colour:kActiveCardColor,
                 cardChild: Column(
@@ -184,8 +185,13 @@ class _InputPageState extends State<InputPage> {
           Expanded(
             flex: 1,
             child: BottomButton(buttonTitle: "CALCULATE",onTap: (){
+              CalculatorBrain calc = CalculatorBrain(height: height,weight: weight);
               Navigator.push(context,MaterialPageRoute(builder: (context){
-                return ResultPage();
+                return ResultPage(
+                  bmiResult:calc.calculateBMI() ,
+                  resultText: calc.getResult(),
+                  interpretation: calc.getInterpretation(),
+                );
               }));
             },),
           )
